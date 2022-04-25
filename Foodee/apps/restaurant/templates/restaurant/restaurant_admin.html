@@ -1,0 +1,97 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Restaurant Admin - {% endblock %}
+
+{% block content %}
+    <div class="box">
+        <h1 class="title">Restaurant Admin - {{ restaurant.name }}</h1>
+        <strong>My Balance: ${{ restaurant.get_balance }}</strong><br>
+        <strong>My Paid Amount: ${{ restaurant.get_paid_amount }}</strong><br>
+        <hr>
+        <a href="{% url 'logout' %}" class="button is-danger">Logout</a>
+    </div>
+    <div class="box">
+        <h2 class="is-size-3 mb-4">My Foods</h2>
+        <a href="{% url 'add_food' %}" class="button is-dark is-uppercase mb-6">Add food</a>
+        {% if foods %}
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for food in foods %}
+                        <tr>
+                            <td>{{ food.title }}</td>
+                            <td>${{ food.price }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>You don't have any products yet...</p>
+        {% endif %}
+    </div>
+
+    <div class="box">
+        <h2 class="is-size-3 mb-4">My orders</h2><hr>
+    
+        {% if orders %}
+            {% for order in orders %}
+                <div class="{% if order.fully_paid %}has-background-success-light{% else %}has-background-info-light{% endif %} mb-2 p-4">
+                    <div class="columns is-multiline">
+                        <div class="column is-6">
+                            <h3 class="is-size-4">#{{ order.id }} - {{ order.first_name }} {{ order.last_name }}</h3>
+                        </div>
+    
+                        <div class="column is-12">
+                            <b>Name:</b> {{ order.first_name }} {{ order.last_name }}<br>
+                            <b>Address:</b> {{ order.address }}<br>
+                            <b>Zip and place:</b> {{ order.zipcode }} {{ order.place }}<br>
+                            <b>E-mail:</b> {{ order.email }}<br>
+                            <b>Phone:</b> {{ order.phone }}
+
+                            <div class="select is-rounded">
+                                <select>
+                                  <option>Order Status</option>
+                                  <option>With options</option>
+                                </select>
+                              </div>
+    
+                            <table class="table is-fullwidth mt-4">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Paid</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+    
+                                <tbody>
+                                    {% for item in order.items.all %}
+                                        {% if item.restaurant == request.user.restaurant %}
+                                            <tr>
+                                                <td>{{ item.food.title }}</td>
+                                                <td>${{ item.food.price }}</td>
+                                                <td>{{ item.quantity }}</td>
+                                                <td>{{ item.restaurant_paid|yesno:"Yes,No" }}</td>
+                                                <td>${{ item.get_total_price }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}

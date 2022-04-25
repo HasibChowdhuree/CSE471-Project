@@ -1,0 +1,114 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Restaurant Admin - {% endblock %}
+
+{% block content %}
+    <div class="box">
+        <h1 class="title">delivery dashboard - {{ restaurant.name }}</h1>
+        <hr>
+        <a href="{% url 'logout' %}" class="button is-danger">Logout</a>
+    </div>
+
+    <div class="box">
+        <h2 class="is-size-3 mb-4">My orders</h2><hr>
+    
+        {% if orders %}
+            {% for order in orders %}
+                <div class="{% if order.fully_paid %}has-background-success-light{% else %}has-background-info-light{% endif %} mb-2 p-4">
+                    <div class="columns is-multiline">
+                        <div class="column is-6">
+                            <h3 class="is-size-4">#{{ order.id }} - {{ order.first_name }} {{ order.last_name }}</h3>
+                        </div>
+    
+                        <div class="column is-12">
+                            <b>Name:</b> {{ order.first_name }} {{ order.last_name }}<br>
+                            <b>Address:</b> {{ order.address }}<br>
+                            <b>Zip and place:</b> {{ order.zipcode }} {{ order.place }}<br>
+                            <b>E-mail:</b> {{ order.email }}<br>
+                            <b>Phone:</b> {{ order.phone }}
+
+                            <div class="select is-rounded">
+                                <select>
+                                  <option>Order Status</option>
+                                  <option>With options</option>
+                                </select>
+                              </div>
+    
+                            <table class="table is-fullwidth mt-4">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Paid</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+    
+                                <tbody>
+                                    {% for item in order.items.all %}
+                                        {% if item.restaurant == request.user.restaurant %}
+                                            <tr>
+                                                <td>{{ item.food.title }}</td>
+                                                <td>${{ item.food.price }}</td>
+                                                <td>{{ item.quantity }}</td>
+                                                <td>{{ item.restaurant_paid|yesno:"Yes,No" }}</td>
+                                                <td>${{ item.get_total_price }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="box">
+        <h2 class="is-size-3 mb-4">My orders</h2><hr>
+    
+        {% if sends %}
+            {% for send in sends %}
+                <div class="has-background-success-light mb-2 p-4">
+                    <div class="columns is-multiline">
+                        <div class="column is-6">
+                            <h3 class="is-size-4">#{{ send.id }} - {{ send.sender_name }} {{ send.sender_phone }}</h3>
+                        </div>
+    
+                        <div class="column is-12">
+                            <div>
+                            Sender Information
+                            <b> Name:</b> {{ send.sender_name }}<br>
+                            <b>Address:</b> {{ send.sender_address }}<br>
+                            <b>E-mail:</b> {{ send.sender_email }}<br>
+                            <b>Phone:</b> {{ send.sender_phone }}
+                            </div>
+
+                            <div>
+                                Receiver Information
+                                <b> Name:</b> {{ send.receiver_name }}<br>
+                                <b>Address:</b> {{ send.receiver_address }}<br>
+                                <b>E-mail:</b> {{ send.receiver_email }}<br>
+                                <b>Phone:</b> {{ send.receiver_phone }}
+                            </div>
+
+                            <div class="select is-rounded">
+                                <select>
+                                  <option>Order Status</option>
+                                  <option>With options</option>
+                                </select>
+                            </div>
+    
+                            
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}

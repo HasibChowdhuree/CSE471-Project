@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% block title %}Home - {% endblock %}
+
+{% block content %}
+<br><br><br>
+    <div class="columns homepage">
+        <div class="column is-two-thirds">
+            <a href="{% url 'order_food' %}">
+                <div class="box homepage-box"  style="height: 150px;">
+                    <h1 class="title">Order Food</h1>
+                </div>
+            </a>
+        </div>
+        <div class="column is-one-thirds">
+            <a href="{% url 'send_food' %}">
+                <div class="box"  style="height: 150px;">
+                    <h1 class="title">Send Food</h1>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="columns">
+        <div class="column is-half">
+            <a href="{% url 'register_restaurant' %}">
+                <div class="box"  style="height: 150px;">
+                    <h1 class="title">Register your restaurant</h1>
+                </div>
+            </a>
+        </div>
+        <div class="column is-half">
+            <a href="{% url 'deliveryman_register' %}">
+                <div class="box"  style="height: 150px;">
+                    <h1 class="title">Register as a deliverman</h1>
+                </div>
+            </a>
+        </div>
+    </div>
+    <br><br><br>
+{% endblock %}

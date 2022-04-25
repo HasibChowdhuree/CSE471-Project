@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>{% block title %}{% endblock %}Foodee</title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+        <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+        <script src="{% static 'scripts/main.js' %}"></script>
+    </head>
+
+    <body>
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-item" id="logo"><strong>Foodee.</strong></a>
+        
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="main-navbar">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+        
+            <div class="navbar-menu" id="main-navbar">
+                <div class="navbar-end"></div>
+                <div class="navbar-item">
+                    <a href="{% url 'order_food' %}" class="navbar-item">Order Food</a>
+                </div>
+                <div class="navbar-item">
+                    <a href="{% url 'send_food' %}" class="navbar-item">Send Food</a>
+                </div>
+                <div class="navbar-item">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'logout' %}" class="navbar-item">Logout</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="navbar-item">Login</a>
+                        <a href="{% url 'register' %}" class="navbar-item">Register</a>
+                    {% endif %}
+                </div>
+                <div class="navbar-item">
+                    <a href="{% url 'cart' %}" class="button">Cart{% if cart %} ({{ cart|length }}){% endif %}</a>
+                </div>
+            </div>
+        </nav>
+        
+        <section class="section">
+            <div class="container">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </section>
+        <footer class="footer">
+            <h3 class="is-size-4 mb-4">Foodee</h3>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'restaurant_admin' %}">Restaurant admin</a>
+            {% else %}
+                <a href="{% url 'register_restaurant' %}">Register restaurant</a>
+            {% endif %}
+        </footer>
+        {% block scripts %}
+        {% endblock %}
+    </body>
+</html>

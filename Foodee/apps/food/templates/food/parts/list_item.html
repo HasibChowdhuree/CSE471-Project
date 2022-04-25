@@ -1,0 +1,19 @@
+<div class="column is-3 product-list-item">
+    <div class="box">
+        <figure class="image is-4by3 mb-4">
+            <img src="{{ food.get_thumbnail }}">
+        </figure>
+
+        <h2 class="subtitle">{{ food.title }}</h2>
+        
+        <p class="mb-6"><span class="tag is-dark"><a href="{% url 'restaurant_page' food.restaurant.id %}" style="color: white;">{{ food.restaurant.name }}</a></span></p>
+
+        <h3 class="price is-size-6 mb-5">${{ food.price }}</h3>
+
+
+        <hr>
+        <div class="has-text-right">
+            <a href="{% url 'food' food.category.slug food.slug %}" class="button is-dark">View Item</a>
+        </div>
+    </div>
+</div>

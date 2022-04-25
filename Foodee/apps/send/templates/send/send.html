@@ -1,0 +1,113 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Send Food - {% endblock %}
+
+{% block content %}
+    <h1 class="title has-text-centered">Send Food</h1>
+    <hr>
+
+    
+
+    <h2 class="subtitle">Contact information</h2>
+
+    <form method="post" action="." id="payment-form">
+        {% csrf_token %}   
+
+        <div class="columns">
+            <div class="column is-6">
+                <div class="field">
+                    <label>Sender name</label>
+
+                    <div class="control">
+                        <input class="input" type="text" name="sender_name">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Sender E-mail</label>
+
+                    <div class="control">
+                        <input class="input" type="email" name="sender_email">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Sender Phone</label>
+
+                    <div class="control">
+                        <input class="input" type="text" name="sender_phone">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Sender Address</label>
+
+                    <div class="control">
+                        <input class="input" type="text" name="sender_address">
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-6">
+                <div class="field">
+                    <label>Reciever name</label>
+
+                    <div class="control">
+                        <input class="input" type="text" name="receiver_name">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Reciever E-mail</label>
+
+                    <div class="control">
+                        <input class="input" type="email" name="receiver_email">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Reciever Phone</label>
+
+                    <div class="control">
+                        <input class="input" type="text" name="receiver_phone">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Reciever Address</label>
+
+                    <div class="control">
+                        <input class="input" type="text" name="receiver_address">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <h2 class="subtitle">Payment information</h2>
+        <div class="control">
+            <label class="radio">
+                <input type="radio" name="foobar">
+                Online Payment - Pay BDT 100 
+            </label>
+            <br>
+            <label class="radio">
+                <input type="radio" name="foobar" checked>
+                Cash on Delivery
+            </label>
+        </div>
+        <hr>
+
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-dark mt-4 is-uppercase">Submit</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+
+{% block scripts %}
+
+{% endblock %}
